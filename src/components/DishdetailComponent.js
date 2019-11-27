@@ -18,7 +18,7 @@ class Dishdetail extends Component{
             month['05'] = "May";
             month['06'] = "Jun";
             month['07'] = "Jul";
-            month['08'] = "Agu";
+            month['08'] = "Aug";
             month['09'] = "Sep";
             month['10'] = "Oct";
             month['11'] = "Nov";
@@ -34,15 +34,17 @@ class Dishdetail extends Component{
                 console.log(dish.comments[1].author);
                
                     return(
-                    
                         <div className="col-12 col-md-5 m-1">
                             <h4>Comments</h4>
-                            
-                            {dish.comments.map((value, index) =>{
-                            return [   
-                                <p key={index}> {value.comment}</p>,
-                            <p key={index}>--{value.author},{this.monthf(value.date.substr(5,2))}, {value.date.substr(8,2)}, {value.date.substr(0,4)}</p>                            
-                            ]})}
+                            <ul className="list-unstyled">
+                                {dish.comments.map((value, index) =>{
+                                return [   
+                                    <li key={index}> {value.comment}</li>,
+                                    <li key={index}>--{value.author},
+                                       {new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short', day:'2-digit'}).format(new Date(Date.parse(value.date)))}
+                                    </li>, <br/>           
+                                ]})}
+                            </ul>
                         </div>
                     );
                
@@ -80,12 +82,12 @@ class Dishdetail extends Component{
         }
 
         render(){
-            // const dish = this.props.selectedDish
             return(
-                <div className="row">
-                        {this.renderDish(this.props.selectedDish)}
-                        {this.renderComments(this.props.selectedDish)}
-
+                <div class="container">
+                    <div className="row">
+                        {this.renderDish(this.props.dish)}
+                        {this.renderComments(this.props.dish)}
+                    </div>
                 </div>
             );
         }
